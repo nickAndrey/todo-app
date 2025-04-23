@@ -7,11 +7,12 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant: Variant;
   children: ReactNode;
   size?: Size;
+  customClass?: string;
 };
 
 const Button: FC<ButtonProps> = ({ variant, children, size, ...props }) => {
   return (
-    <button className={getVariantStyles(variant, size)} {...props}>
+    <button className={getVariantStyles(variant, size, props.className)} {...props}>
       {children}
     </button>
   );
