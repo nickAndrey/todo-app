@@ -38,7 +38,7 @@ type SideBarProps = {
 
 const SideBar: FC<SideBarProps> = ({ isExpanded }) => {
   const linkVariants = tv({
-    base: 'py-4 px-4 mx-3 rounded-full text-lg flex items-center gap-2',
+    base: 'py-4 px-4 mx-3 rounded-full text-lg flex items-center gap-2 transition-colors duration-200',
     variants: {
       variant: {
         active: 'bg-amber-100 hover:bg-amber-100',

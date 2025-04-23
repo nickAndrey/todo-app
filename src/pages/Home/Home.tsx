@@ -5,7 +5,19 @@ const Home: FC = () => {
   return (
     <div>
       <h4>Home</h4>
-      <Card title="test" />
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-2">
+        <Card title="test" />
+        <Card title="test" />
+        <Card title="test" />
+        <Card title="test" />
+        <Card title="test" />
+        <Card title="test" />
+        <Card title="test" />
+        <Card title="test" />
+        <Card title="test" />
+        <Card title="test" />
+        <Card title="test" />
+      </div>
     </div>
   );
 };
