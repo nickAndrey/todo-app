@@ -55,8 +55,8 @@ const SideBar: FC<SideBarProps> = ({ isExpanded }) => {
     <div className="border-r-2 border-gray-100 py-2">
       <ul className="flex flex-col">
         {routes.map((route) => (
-          <li>
-            <NavLink to={route.href} key={route.id} className={linkStyles}>
+          <li key={route.id}>
+            <NavLink to={route.href} className={linkStyles}>
               {route.icon}
               {isExpanded && <span className="text-sm">{route.label}</span>}
             </NavLink>
