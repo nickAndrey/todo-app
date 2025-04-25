@@ -1,9 +1,14 @@
 import { Card, Modal } from '@/components/UI';
 import { FC, useState } from 'react';
+import Markdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { splitByColumns } from './utils/splitByColumns';
 
 const Home: FC = () => {
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [editNoteDialog, setEditNoteDialog] = useState({
+    isOpened: false,
+    note: '',
+  });
 
   const columns = splitByColumns(
     [
@@ -25,14 +30,14 @@ const Home: FC = () => {
       { key: '', content: '' },
       { key: '', content: '' },
     ],
-    7
+    5
   );
 
   return (
     <div>
       <h4>Home</h4>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-4 items-start">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 items-start">
         {columns.map((column, columnIndex) => (
           <div className="grid gap-4 items-start" key={columnIndex}>
             {column.map((item, itemIndex) => (
@@ -40,14 +45,24 @@ const Home: FC = () => {
                 title={item.key as string}
                 content={item.content as string}
                 key={itemIndex}
-                onEditNote={() => setIsDialogOpen(true)}
+                onEditNote={() =>
+                  setEditNoteDialog((prev) => ({
+                    ...prev,
+                    isOpened: true,
+                    note: `#### test`,
+                  }))
+                }
               />
             ))}
           </div>
         ))}
       </div>
 
-      {isDialogOpen && <Modal onClose={() => setIsDialogOpen(false)} />}
+      {editNoteDialog.isOpened && (
+        <Modal onClose={() => setEditNoteDialog((prev) => ({ ...prev, isOpened: false }))}>
+          <Markdown remarkPlugins={[remarkGfm]}>{editNoteDialog.note as string}</Markdown>
+        </Modal>
+      )}
     </div>
   );
 };
