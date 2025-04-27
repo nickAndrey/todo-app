@@ -25,19 +25,19 @@ const Home: FC = () => {
     }));
   };
 
-  const onResetDraft = () => {
+  const onResetDraftNote = () => {
     setDraftNote((prev) => ({
       ...prev,
       note: { title: '', content: '', status: 'active' },
     }));
   };
 
-  const onChangeMode = (mode: 'edit' | 'preview') => {
+  const onChangeDraftMode = (mode: 'edit' | 'preview') => {
     setDraftNote((prev) => ({ ...prev, mode }));
 
     if (mode === 'preview' && (draftNote.note.title !== '' || draftNote.note.content !== '')) {
       addNote(draftNote.note);
-      onResetDraft();
+      onResetDraftNote();
     }
   };
 
@@ -52,8 +52,8 @@ const Home: FC = () => {
         draftNote={draftNote.note}
         mode={draftNote.mode}
         onChangeDraftNote={onChangeDraftNote}
-        onChangeMode={onChangeMode}
-        onResetDraft={onResetDraft}
+        onChangeMode={onChangeDraftMode}
+        onResetDraft={onResetDraftNote}
       />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 items-start max-w-7xl w-full">
