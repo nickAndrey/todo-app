@@ -5,6 +5,10 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   plugins: [react()],
   resolve: {
-    alias: [{ find: '@', replacement: '/src' }],
+    alias: [
+      { find: '@', replacement: '/src' },
+      { find: '@ui', replacement: '/src/components/UI' },
+      { find: '@layout', replacement: '/src/components/Layout' },
+    ],
   },
 });

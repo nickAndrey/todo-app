@@ -1,7 +1,7 @@
+import { Button } from '@ui/Button';
 import { FC, ReactNode } from 'react';
 import { IoClose } from 'react-icons/io5';
 import { tv } from 'tailwind-variants';
-import { Button } from '..';
 
 type ModalProps = {
   children: ReactNode;

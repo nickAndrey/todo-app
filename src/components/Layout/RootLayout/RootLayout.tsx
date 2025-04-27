@@ -1,6 +1,7 @@
+import { Header } from '@layout/Header';
+import { SideBar } from '@layout/SideBar';
 import { FC, useState } from 'react';
 import { Outlet } from 'react-router';
-import { Header, SideBar } from '..';
 
 const RootLayout: FC = () => {
   const [isSideBarExpanded, setIsSideBarExpanded] = useState(false);

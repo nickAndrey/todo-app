@@ -1,68 +1,76 @@
-import { Card, Modal } from '@/components/UI';
+import { useNotesStore } from '@/store/notes';
+import { Note } from '@/types/note.types';
+import { Card } from '@ui/Card';
+import { DraftNotePanel } from '@ui/DraftNotePanel';
 import { FC, useState } from 'react';
-import Markdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 import { splitByColumns } from './utils/splitByColumns';
 
 const Home: FC = () => {
-  const [editNoteDialog, setEditNoteDialog] = useState({
-    isOpened: false,
-    note: '',
+  const notes = useNotesStore.use.notes();
+  const addNote = useNotesStore.use.addNote();
+  const deleteNote = useNotesStore.use.deleteNote();
+
+  const [draftNote, setDraftNote] = useState<{
+    note: Partial<Note>;
+    mode: 'edit' | 'preview';
+  }>({
+    note: { title: '', content: '', status: 'active' },
+    mode: 'preview',
   });
 
+  const onChangeDraftNote = (name: keyof Note, value: string) => {
+    setDraftNote((prev) => ({
+      ...prev,
+      note: { ...prev.note, [name]: value },
+    }));
+  };
+
+  const onResetDraft = () => {
+    setDraftNote((prev) => ({
+      ...prev,
+      note: { title: '', content: '', status: 'active' },
+    }));
+  };
+
+  const onChangeMode = (mode: 'edit' | 'preview') => {
+    setDraftNote((prev) => ({ ...prev, mode }));
+
+    if (mode === 'preview' && (draftNote.note.title !== '' || draftNote.note.content !== '')) {
+      addNote(draftNote.note);
+      onResetDraft();
+    }
+  };
+
   const columns = splitByColumns(
-    [
-      { key: '', content: '' },
-      { key: '', content: '' },
-      { key: '', content: '' },
-      { key: '', content: '' },
-      { key: '', content: '' },
-      { key: '', content: '' },
-      { key: '', content: '' },
-      { key: '', content: '' },
-      { key: '', content: '' },
-      { key: '', content: '' },
-      { key: '', content: '' },
-      { key: '', content: '' },
-      { key: '', content: '' },
-      { key: '', content: '' },
-      { key: '', content: '' },
-      { key: '', content: '' },
-      { key: '', content: '' },
-    ],
+    notes.filter((item) => item.status === 'active'),
     5
   );
 
   return (
-    <div>
-      <h4>Home</h4>
+    <div className="flex flex-col gap-8 pt-8 items-center">
+      <DraftNotePanel
+        draftNote={draftNote.note}
+        mode={draftNote.mode}
+        onChangeDraftNote={onChangeDraftNote}
+        onChangeMode={onChangeMode}
+        onResetDraft={onResetDraft}
+      />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 items-start">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 items-start max-w-7xl w-full">
         {columns.map((column, columnIndex) => (
           <div className="grid gap-4 items-start" key={columnIndex}>
-            {column.map((item, itemIndex) => (
+            {column.map((item) => (
               <Card
-                title={item.key as string}
-                content={item.content as string}
-                key={itemIndex}
-                onEditNote={() =>
-                  setEditNoteDialog((prev) => ({
-                    ...prev,
-                    isOpened: true,
-                    note: `#### test`,
-                  }))
-                }
+                title={item.title}
+                content={item.content}
+                key={item.id}
+                onDeleteNote={() => deleteNote(item.id)}
+                onEditNote={() => {}}
               />
             ))}
           </div>
         ))}
       </div>
-
-      {editNoteDialog.isOpened && (
-        <Modal onClose={() => setEditNoteDialog((prev) => ({ ...prev, isOpened: false }))}>
-          <Markdown remarkPlugins={[remarkGfm]}>{editNoteDialog.note as string}</Markdown>
-        </Modal>
-      )}
     </div>
   );
 };

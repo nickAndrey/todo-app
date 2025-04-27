@@ -1,5 +1,5 @@
-import { Button } from '@/components/UI';
 import { Path } from '@/types/path';
+import { Button } from '@ui/Button';
 import { FC, useEffect, useState } from 'react';
 import { FiMenu } from 'react-icons/fi';
 import { useLocation } from 'react-router';
