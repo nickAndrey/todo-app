@@ -24,10 +24,11 @@
 
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "@ui/*": ["src/components/UI/*"],
-      "@layout/*": ["src/components/Layout/*"]
-    }
+      "@/*": ["./src/*"],
+      "@ui/*": ["./src/components/UI/*"],
+      "@layout/*": ["./src/components/Layout/*"]
+    },
+    "types": ["vitest/globals"]
   },
-  "include": ["src"]
+  "include": ["src", "tests"]
 }

@@ -1,4 +1,4 @@
-import { useNotesStore } from '@/store/notes';
+import { useNotesStoreBase } from '@/store/notes';
 import { Note } from '@/types/note.types';
 import { Card } from '@ui/Card';
 import { DraftNotePanel } from '@ui/DraftNotePanel';
@@ -6,9 +6,9 @@ import { FC, useState } from 'react';
 import { splitByColumns } from './utils/splitByColumns';
 
 const Home: FC = () => {
-  const notes = useNotesStore.use.notes();
-  const addNote = useNotesStore.use.addNote();
-  const deleteNote = useNotesStore.use.deleteNote();
+  const notes = useNotesStoreBase((state) => state.notes);
+  const addNote = useNotesStoreBase((state) => state.addNote);
+  const deleteNote = useNotesStoreBase((state) => state.deleteNote);
 
   const [draftNote, setDraftNote] = useState<{
     note: Partial<Note>;
