@@ -5,6 +5,8 @@ type TNotesContext = {
   notes: TNote[];
   addNote: (note: Partial<TNote>) => void;
   removeNote: (noteId: string) => void;
+  archiveNote: (noteId: string) => void;
+  restoreNote: (noteId: string) => void;
 };
 
 const NotesContext = createContext<TNotesContext | null>(null);
@@ -30,10 +32,22 @@ export const NotesContextProvider: FC<NotesProviderProps> = ({ children }) => {
   };
 
   const removeNote = (noteId: string) => {
-    setNotes((prev) => prev.filter((item) => item.id !== noteId));
+    setNotes((prev) =>
+      prev.map((item) => (item.id === noteId ? { ...item, status: 'deleted' } : item))
+    );
   };
 
-  // const updateNote = () => {};
+  const archiveNote = (noteId: string) => {
+    setNotes((prev) =>
+      prev.map((item) => (item.id === noteId ? { ...item, status: 'archived' } : item))
+    );
+  };
+
+  const restoreNote = (noteId: string) => {
+    setNotes((prev) =>
+      prev.map((item) => (item.id === noteId ? { ...item, status: 'active' } : item))
+    );
+  };
 
   return (
     <NotesContext.Provider
@@ -41,6 +55,8 @@ export const NotesContextProvider: FC<NotesProviderProps> = ({ children }) => {
         notes,
         addNote,
         removeNote,
+        archiveNote,
+        restoreNote,
       }}
     >
       {children}

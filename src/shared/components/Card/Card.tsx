@@ -4,6 +4,7 @@ import { FC } from 'react';
 import { FaRegTrashAlt } from 'react-icons/fa';
 import { GoArchive } from 'react-icons/go';
 import { IoColorPaletteOutline } from 'react-icons/io5';
+import { MdSettingsBackupRestore } from 'react-icons/md';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
@@ -12,6 +13,7 @@ type CardProps = {
   content?: string;
   onColorChange?: () => void;
   onArchiveNote?: () => void;
+  onRestoreNote?: () => void;
   onDeleteNote?: () => void;
   onEditNote?: () => void;
 };
@@ -21,6 +23,7 @@ const Card: FC<CardProps> = ({
   content,
   onColorChange,
   onArchiveNote,
+  onRestoreNote,
   onDeleteNote,
   onEditNote,
 }) => {
@@ -43,13 +46,23 @@ const Card: FC<CardProps> = ({
           <IoColorPaletteOutline />
         </Button>
 
-        <Button variant="round" size="sm" className="bg-white" onClick={onArchiveNote}>
-          <GoArchive />
-        </Button>
+        {onArchiveNote && (
+          <Button variant="round" size="sm" className="bg-white" onClick={onArchiveNote}>
+            <GoArchive />
+          </Button>
+        )}
 
-        <Button variant="round" size="sm" className="bg-white" onClick={onDeleteNote}>
-          <FaRegTrashAlt />
-        </Button>
+        {onRestoreNote && (
+          <Button variant="round" size="sm" className="bg-white" onClick={onRestoreNote}>
+            <MdSettingsBackupRestore className="text-lg" />
+          </Button>
+        )}
+
+        {onDeleteNote && (
+          <Button variant="round" size="sm" className="bg-white" onClick={onDeleteNote}>
+            <FaRegTrashAlt />
+          </Button>
+        )}
       </footer>
     </article>
   );

@@ -6,7 +6,7 @@ import { splitByColumns } from '@/shared/utils/splitByColumns';
 import { FC, useState } from 'react';
 
 const Home: FC = () => {
-  const { addNote, removeNote, notes } = useNotesContext();
+  const { addNote, removeNote, archiveNote, notes } = useNotesContext();
 
   const [draftNote, setDraftNote] = useState<{
     note: Partial<TNote>;
@@ -63,7 +63,7 @@ const Home: FC = () => {
                 content={item.content}
                 key={item.id}
                 onDeleteNote={() => removeNote(item.id)}
-                onEditNote={() => {}}
+                onArchiveNote={() => archiveNote(item.id)}
               />
             ))}
           </div>
