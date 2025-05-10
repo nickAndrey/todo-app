@@ -1,11 +1,13 @@
 import RootLayout from '@/app/Layout/RootLayout';
-import { Archive } from '@/domains/archive';
-import { Home } from '@/domains/home';
-import { Reminders } from '@/domains/reminders';
-import { Trash } from '@/domains/trash';
 
 import { Path } from '@/shared/types/path';
+import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router';
+
+const HomePage = lazy(() => import('@/domains/home/HomePage'));
+const ArchivePage = lazy(() => import('@/domains/archive/ArchivePage'));
+const RemindersPage = lazy(() => import('@/domains/reminders/RemindersPage'));
+const TrashPage = lazy(() => import('@/domains/trash/TrashPage'));
 
 export const routes = createBrowserRouter([
   {
@@ -14,23 +16,23 @@ export const routes = createBrowserRouter([
     children: [
       {
         index: true,
-        Component: Home,
+        Component: HomePage,
       },
       {
         path: Path.HOME,
-        Component: Home,
+        Component: HomePage,
       },
       {
         path: Path.REMINDERS,
-        Component: Reminders,
+        Component: RemindersPage,
       },
       {
         path: Path.ARCHIVE,
-        Component: Archive,
+        Component: ArchivePage,
       },
       {
         path: Path.TRASH,
-        Component: Trash,
+        Component: TrashPage,
       },
     ],
   },

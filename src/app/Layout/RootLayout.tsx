@@ -1,7 +1,8 @@
-import { FC, useState } from 'react';
+import { FC, Suspense, useState } from 'react';
 import { Outlet } from 'react-router';
 import { NotesContextProvider } from '../contexts/notes/NotesContext';
 import Header from './Header';
+import Loader from './Loader';
 import SideBar from './SideBar';
 
 const RootLayout: FC = () => {
@@ -18,7 +19,9 @@ const RootLayout: FC = () => {
 
         <main className="px-4 pb-2 w-full">
           <NotesContextProvider>
-            <Outlet />
+            <Suspense fallback={<Loader />}>
+              <Outlet />
+            </Suspense>
           </NotesContextProvider>
         </main>
       </div>
